@@ -6,7 +6,7 @@ djangorestframework
 babel
 markdown
 python-memcached
-psycopg2
+psycopg2-binary
 Pillow
 reportlab
 pytz
