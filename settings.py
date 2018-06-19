@@ -6,8 +6,7 @@ import socket
 from datetime import timedelta
 from django.contrib.messages import constants as messages
 
-DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+DEBUG = True
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
@@ -78,6 +77,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
+        'DEBUG': DEBUG,
         'DIRS': (
             os.path.join(APP_DIR, 'templates'),
             os.path.join(BASE_DIR, 'uploads'),
@@ -113,34 +113,35 @@ INSTALLED_APPS = (
 AUTH_USER_MODEL = 'servo.User'
 AUTH_PROFILE_MODULE = 'servo.UserProfile'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'stderr': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'filters': {
+            'require_debug_false': {
+                '()': 'django.utils.log.RequireDebugFalse'
+            }
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
+        'handlers': {
+            'stderr': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+            },
+            'mail_admins': {
+                'level': 'ERROR',
+                'filters': ['require_debug_false'],
+                'class': 'django.utils.log.AdminEmailHandler',
+                'include_html': True,
+            }
         },
+        'loggers': {
+            'django.request': {
+                'handlers': ['mail_admins'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        }
     }
-}
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler",)
@@ -164,7 +165,7 @@ LOGIN_EXEMPT_URLS = [
     'api/notes/',
     'api/users/',
     'api/customers/',
-    'api/devices/'
+    'api/devices/',
 ]
 
 # 404 URLs that should be ignored
@@ -173,14 +174,6 @@ IGNORABLE_404_URLS = [
 ]
 
 TEST_RUNNER = 'servo.tests.NoDbTestRunner'
-
-EMAIL_HOST = 'mail.servoapp.com'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_HOST_USER = ''
-EMAIL_USE_TLS = True
-EMAIL_SUBJECT_PREFIX = '[Servo] '
-DEFAULT_FROM_EMAIL = 'support@servoapp.com'
-SERVER_EMAIL = 'servo@' + socket.gethostname()
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
