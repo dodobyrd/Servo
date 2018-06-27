@@ -20,5 +20,5 @@ python-magic
 pyexcel-xls
 pyexcel-xlsx
 pyexcel_text
--e git+git://github.com/filipp/py-gsxws.git#egg=gsxws
+gsxws
 -e git+git://github.com/filipp/django-wkhtmltopdf.git#egg=django-wkhtmltopdf

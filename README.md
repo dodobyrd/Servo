@@ -9,7 +9,7 @@ Main features include:
 - A rich set of communication tools (two-way email support, SMS sending, GSX escalations, attachment support)
 - Inventory management (product categories, stocking per location, bracketed markup)
 - Robust customer database (hierarchical customer data, custom fields)
-- Fast search
+- Fast Spotlight-style search
 - Statistics and reporting
 - Rule-based automation
 - Dedicated check-in interface for customers and POS staff
@@ -38,7 +38,7 @@ The application is written in Python on top of the excellent [Django web framewo
 
 Installation
 ============
-Install PostgreSQL, nginx, memcached, rabbitMQ. Then install the necessary Python packages:
+Install and start [PostgreSQL](https://www.postgresql.org), [nginx](http://nginx.org), [memcached](https://www.memcached.org), rabbitMQ (only necessary if you want to use automated rules). Then install the necessary Python packages:
 
     $ pip install -U -r requirements.pip
 
