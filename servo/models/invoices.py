@@ -17,7 +17,7 @@ class Invoice(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         editable=False,
-        on_delete=models.SET_NULL
+        on_delete=models.PROTECT
     )
 
     PAYMENT_METHODS = (
@@ -38,7 +38,11 @@ class Invoice(models.Model):
 
     is_paid  = models.BooleanField(default=False, verbose_name=_("Paid"))
     paid_at  = models.DateTimeField(null=True, editable=False)
-    order    = models.ForeignKey(Order, editable=False, on_delete=models.SET_NULL)
+    order    = models.ForeignKey(
+        Order,
+        editable=False,
+        on_delete=models.PROTECT
+    )
     location = models.ForeignKey(
         Location,
         null=True,
@@ -187,7 +191,7 @@ class Payment(models.Model):
         default=METHODS[0][0],
         verbose_name=_("Payment Method")
     )
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
 

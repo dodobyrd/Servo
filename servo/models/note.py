@@ -120,7 +120,7 @@ class Note(MPTTModel):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         editable=False,
-        on_delete=models.SET_NULL
+        on_delete=models.PROTECT
     )
     sent_at = models.DateTimeField(null=True, editable=False)
     order = models.ForeignKey(
@@ -666,8 +666,8 @@ class Article(models.Model):
     product_model = ArrayField(models.CharField(max_length=128),
                                null=True,
                                editable=False)
-    read_by = ArrayField(models.IntegerField(), default=[])
-    flagged_by = ArrayField(models.IntegerField(), default=[])
+    read_by = ArrayField(models.IntegerField(), default=list)
+    flagged_by = ArrayField(models.IntegerField(), default=list)
 
     def get_creation_date(self):
         return self.date_created

@@ -27,8 +27,9 @@ class PurchaseOrder(models.Model):
     location = models.ForeignKey(
         Location,
         editable=False,
+        null=True,
+        on_delete=models.SET_NULL,
         help_text=_('The location from which this PO was created'),
-        on_delete=models.SET_NULL
     )
     sales_order = models.ForeignKey(
         Order,
@@ -52,6 +53,7 @@ class PurchaseOrder(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         editable=False,
+        null=True,
         on_delete=models.SET_NULL
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
