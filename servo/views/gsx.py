@@ -95,7 +95,7 @@ def add_part(request, repair, part):
             data = {'part': part.part_number, 'repair': rep.confirmation}
             msg = _("Part %(part)s added to repair %(repair)s") % data
             messages.success(request, msg)
-        except gsxws.GsxError, e:
+        except gsxws.GsxError as e:
             messages.error(request, e)
 
         return redirect(rep.order)
@@ -124,7 +124,7 @@ def remove_part(request, repair, part):
             data = {'part': part.code, 'repair': rep.confirmation}
             msg = _(u"Part %(part)s removed from %(repair)s") % data
             messages.success(request, msg)
-        except gsxws.GsxError, e:
+        except gsxws.GsxError as e:
             messages.error(request, e)
 
         return redirect(rep.order)

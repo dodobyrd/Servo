@@ -8,7 +8,7 @@ from django.conf import settings
 from django_countries import countries
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
-from django.forms.extras.widgets import SelectDateWidget
+from django.forms import SelectDateWidget
 
 from servo.validators import (apple_sn_validator,
                               phone_validator,
@@ -22,7 +22,7 @@ from servo.models import (Configuration, Device,
 
 # Generate list of years for purchase date picker
 y = date.today().year
-YEARS = [x + 1 for x in xrange(y - 10, y)]
+YEARS = [x + 1 for x in range(y - 10, y)]
 
 
 def get_checkin_locations(user):

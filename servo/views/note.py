@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import StringIO
+from io import StringIO
 from gsxws import escalations
 
 from django import template

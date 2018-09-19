@@ -10,16 +10,16 @@
 <hr/>
 {% endif %}
 {% for device in order.devices.all %}
-<p>
-  <strong>{{ device.description }}</strong><br/>
-  <small class="muted">{{ device.configuration }}</small><br/>
-  <small class="muted"><i class="icon-barcode"></i> {{ device.sn }}</small>
-</p>
+  <p>
+    <strong>{{ device.description }}</strong><br/>
+    <small class="muted">{{ device.configuration }}</small><br/>
+    <small class="muted"><i class="icon-barcode"></i> {{ device.sn }}</small>
+  </p>
 {% endfor %}
 <hr/>
 {% for p in order.products %}
-<small><strong>{{ p.code }}</strong></small><small class="pull-right">{{ p.price|currency }}</small><br/>
-<small class="muted">{{ p.title }}</small><br/>
+  <small><strong>{{ p.code }}</strong></small><small class="pull-right">{{ p.price|currency }}</small><br/>
+  <small class="muted">{{ p.title }}</small><br/>
 {% endfor %}
 <hr/>
 <strong>{% trans "Total" %}:</strong>

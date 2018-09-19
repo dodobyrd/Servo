@@ -261,7 +261,7 @@ class TemplateForm(BaseModelForm):
         content = self.cleaned_data.get('content')
         try:
             template.Template(content)
-        except template.TemplateSyntaxError, e:
+        except template.TemplateSyntaxError as e:
             raise forms.ValidationError(_('Syntax error in template: %s') % e)
 
         return content
