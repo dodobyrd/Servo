@@ -14,3 +14,4 @@ uploads/temp/*
 backups/*
 local_settings.py
 local_rules.json
+.env
