@@ -591,7 +591,6 @@ class ProductCategory(MPTTModel):
         app_label = "servo"
         get_latest_by = "id"
         ordering = ("-title",)
-        unique_together = ("title", "site",)
 
 
 class Inventory(models.Model):

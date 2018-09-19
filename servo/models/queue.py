@@ -174,7 +174,6 @@ class Queue(models.Model):
         app_label = "servo"
         verbose_name = _("Queue")
         verbose_name_plural = _("Queues")
-        unique_together = ('title', 'site',)
 
 
 class Status(models.Model):
@@ -229,7 +228,6 @@ class Status(models.Model):
         ordering = ('title',)
         verbose_name = _('Status')
         verbose_name_plural = _('Statuses')
-        unique_together = ('title', 'site',)
 
 
 class QueueStatus(models.Model):

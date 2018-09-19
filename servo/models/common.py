@@ -306,7 +306,7 @@ class GsxAccount(models.Model):
         ordering = ['title']
         verbose_name = _("GSX Account")
         verbose_name_plural = _("GSX Accounts")
-        unique_together = ('sold_to', 'ship_to', 'environment', 'site',)
+        unique_together = ('sold_to', 'ship_to', 'environment',)
 
 
 class Tag(MPTTModel):
@@ -532,7 +532,6 @@ class Location(models.Model):
         get_latest_by = 'id'
         verbose_name = _('Location')
         verbose_name_plural = _('Locations')
-        unique_together = ('title', 'site',)
 
 
 class Configuration(models.Model):
@@ -655,7 +654,6 @@ class Configuration(models.Model):
 
     class Meta:
         app_label = 'servo'
-        unique_together = ('key', 'site',)
 
 
 class Property(models.Model):
