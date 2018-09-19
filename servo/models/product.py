@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core.files import File
 from django.core.cache import cache
 from decimal import Decimal, ROUND_CEILING
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.sites.models import Site
 
 from django.contrib.contenttypes.fields import GenericRelation
@@ -533,7 +533,7 @@ class Product(AbstractBaseProduct):
                 filename = basename(result)
                 self.photo.save(filename, File(open(result)))
             except Exception as e:
-                print e
+                print(e)
 
     def __unicode__(self):
         return u'%s %s' % (self.code, self.title)
@@ -547,11 +547,6 @@ class Product(AbstractBaseProduct):
 
 
 class ProductCategory(MPTTModel):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     title = models.CharField(
         max_length=255,
         unique=True,

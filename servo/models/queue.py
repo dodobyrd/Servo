@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from django.db import models
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
 

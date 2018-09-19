@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.utils import timezone, translation
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import QueryDict, HttpResponse
 from dateutil.relativedelta import relativedelta
 from django.utils.translation import ugettext as _

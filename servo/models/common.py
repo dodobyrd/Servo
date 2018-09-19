@@ -3,7 +3,7 @@
 import gsxws
 import os.path
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.defaultfilters import slugify
 from pytz import common_timezones, country_timezones
 
@@ -80,7 +80,7 @@ class BaseItem(models.Model):
     Base class for a few generic relationships
     """
     object_id = models.PositiveIntegerField()
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     content_object = GenericForeignKey("content_type", "object_id")
 
     class Meta:
@@ -119,7 +119,10 @@ class TaggedItem(BaseItem):
 
 
 class FlaggedItem(BaseItem):
-    flagged_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    flagged_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
 
 
 class Event(BaseItem):
@@ -128,7 +131,10 @@ class Event(BaseItem):
     """
     description = models.CharField(max_length=255)
 
-    triggered_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    triggered_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
     triggered_at = models.DateTimeField(auto_now_add=True)
     handled_at = models.DateTimeField(null=True)
 
@@ -169,13 +175,6 @@ class Event(BaseItem):
 
 
 class GsxAccount(models.Model):
-
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     title = models.CharField(max_length=128, default=_("New GSX Account"))
     sold_to = models.CharField(max_length=10, verbose_name=_("Sold-To"))
     ship_to = models.CharField(max_length=10, verbose_name=_("Ship-To"))
@@ -342,7 +341,8 @@ class Tag(MPTTModel):
         'self',
         null=True,
         blank=True,
-        related_name='children'
+        related_name='children',
+        on_delete=models.CASCADE,
     )
 
     times_used = models.IntegerField(default=0, editable=False)
@@ -394,13 +394,6 @@ class LocationManager(models.Manager):
 
 class Location(models.Model):
     """A Service Location within a company."""
-
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     title = models.CharField(
         max_length=255,
         unique=True,
@@ -480,7 +473,8 @@ class Location(models.Model):
         null=True,
         blank=True,
         related_name="managed_locations",
-        limit_choices_to={'is_visible': True}
+        limit_choices_to={'is_visible': True},
+        on_delete=models.SET_NULL
     )
 
     enabled = models.BooleanField(
@@ -544,7 +538,6 @@ class Location(models.Model):
 
 
 class Configuration(models.Model):
-    site = models.ForeignKey(Site, editable=False, default=defaults.site_id)
     key = models.CharField(max_length=255)
     value = models.TextField(default='', blank=True)
 

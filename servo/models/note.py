@@ -17,7 +17,7 @@ from django.core.files.base import ContentFile
 from django.core.exceptions import ValidationError
 
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from django.core.mail import send_mail, EmailMessage
 from django.contrib.contenttypes.fields import GenericRelation

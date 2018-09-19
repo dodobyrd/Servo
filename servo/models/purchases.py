@@ -100,7 +100,7 @@ class PurchaseOrder(models.Model):
         pass
 
     def get_absolute_url(self):
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         if self.submitted_at:
             return reverse("purchases-view_po", args=[self.pk])
 

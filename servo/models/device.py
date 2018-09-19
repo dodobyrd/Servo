@@ -13,7 +13,7 @@ from django.core.files import File
 from django.core.cache import cache
 from django.dispatch import receiver
 from django.utils.text import slugify
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models.signals import post_save
 
 from django.contrib.contenttypes.fields import GenericRelation

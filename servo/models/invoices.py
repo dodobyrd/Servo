@@ -115,7 +115,7 @@ class Invoice(models.Model):
             soi.save()
 
     def get_absolute_url(self):
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         return reverse("invoices-view_invoice", args=[self.pk])
 
     def save(self, *args, **kwargs):

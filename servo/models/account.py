@@ -7,7 +7,7 @@ from django.conf import settings
 
 from pytz import common_timezones
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from rest_framework.authtoken.models import Token
 
 from mptt.fields import TreeForeignKey

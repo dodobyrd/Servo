@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.core.cache import cache
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from django.http import QueryDict, HttpResponseRedirect
