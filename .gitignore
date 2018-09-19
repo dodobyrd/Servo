@@ -15,3 +15,4 @@ backups/*
 local_settings.py
 local_rules.json
 .env
+settings.json
