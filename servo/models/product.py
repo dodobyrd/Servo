@@ -556,7 +556,8 @@ class ProductCategory(MPTTModel):
         'self',
         null=True,
         blank=True,
-        related_name='children'
+        related_name='children',
+        on_delete=models.CASCADE
     )
 
     objects = TreeManager()
@@ -597,8 +598,8 @@ class Inventory(models.Model):
     """
     Inventory tracks how much of Product X is in Location Y
     """
-    product  = models.ForeignKey(Product)
-    location = models.ForeignKey(Location)
+    product  = models.ForeignKey(Product, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     amount_minimum = models.PositiveIntegerField(
         default=0,

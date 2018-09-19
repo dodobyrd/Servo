@@ -27,9 +27,15 @@ class PurchaseOrder(models.Model):
     location = models.ForeignKey(
         Location,
         editable=False,
-        help_text=_('The location from which this PO was created')
+        help_text=_('The location from which this PO was created'),
+        on_delete=models.SET_NULL
     )
-    sales_order = models.ForeignKey(Order, null=True, editable=False)
+    sales_order = models.ForeignKey(
+        Order,
+        null=True,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
     reference = models.CharField(
         blank=True,
         default='',
@@ -43,7 +49,11 @@ class PurchaseOrder(models.Model):
         verbose_name=_("Confirmation"),
     )
 
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     submitted_at = models.DateTimeField(null=True, editable=False)
 
@@ -201,7 +211,8 @@ class PurchaseOrderItem(AbstractOrderItem):
     purchase_order = models.ForeignKey(
         PurchaseOrder,
         editable=False,
-        verbose_name=_("Purchase Order")
+        verbose_name=_("Purchase Order"),
+        on_delete=models.CASCADE
     )
 
     # begin optimization
@@ -209,6 +220,7 @@ class PurchaseOrderItem(AbstractOrderItem):
         Order,
         null=True,
         editable=False,
+        on_delete=models.CASCADE
     )
 
     sales_order_ref = models.CharField(
@@ -230,7 +242,12 @@ class PurchaseOrderItem(AbstractOrderItem):
     )
     # /end optimization
 
-    order_item = models.ForeignKey(ServiceOrderItem, null=True, editable=False)
+    order_item = models.ForeignKey(
+        ServiceOrderItem,
+        null=True,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
     reference  = models.CharField(default='', blank=True, max_length=128)
     ordered_at = models.DateTimeField(null=True, editable=False)
 
@@ -246,7 +263,8 @@ class PurchaseOrderItem(AbstractOrderItem):
         settings.AUTH_USER_MODEL,
         null=True,
         editable=False,
-        related_name='+'
+        related_name='+',
+        on_delete=models.SET_NULL
     )
 
     @classmethod

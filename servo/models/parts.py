@@ -68,9 +68,22 @@ class ServicePart(models.Model):
     Stores the data necessary to connect our ServiceOrderItems
     with the corresponding GSX parts
     """
-    repair = models.ForeignKey("Repair", editable=False)
-    order_item = models.ForeignKey(ServiceOrderItem, editable=False)
-    purchase_order = models.ForeignKey(PurchaseOrder, null=True, editable=False)
+    repair = models.ForeignKey(
+        "Repair",
+        editable=False,
+        on_delete=models.CASCADE
+    )
+    order_item = models.ForeignKey(
+        ServiceOrderItem,
+        editable=False,
+        on_delete=models.CASCADE
+    )
+    purchase_order = models.ForeignKey(
+        PurchaseOrder,
+        null=True,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
 
     comptia_code = models.CharField(
         max_length=4,
@@ -133,7 +146,11 @@ class ServicePart(models.Model):
         editable=False
     )
 
-    shipment = models.ForeignKey(Shipment, null=True)
+    shipment = models.ForeignKey(
+        Shipment,
+        null=True,
+        on_delete=models.SET_NULL
+    )
     box_number = models.PositiveIntegerField(null=True)
     return_label = models.FileField(
         null=True,

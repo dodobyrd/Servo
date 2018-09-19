@@ -14,7 +14,11 @@ from servo.models import (User, Customer, Order, Location,
 
 class Invoice(models.Model):
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
 
     PAYMENT_METHODS = (
         (0, _("No Charge")),
@@ -34,12 +38,13 @@ class Invoice(models.Model):
 
     is_paid  = models.BooleanField(default=False, verbose_name=_("Paid"))
     paid_at  = models.DateTimeField(null=True, editable=False)
-    order    = models.ForeignKey(Order, editable=False)
+    order    = models.ForeignKey(Order, editable=False, on_delete=models.SET_NULL)
     location = models.ForeignKey(
         Location,
         null=True,
         blank=True,
-        editable=False
+        editable=False,
+        on_delete=models.SET_NULL
     )
     customer = models.ForeignKey(
         Customer,
@@ -135,7 +140,7 @@ class Invoice(models.Model):
 
 
 class InvoiceItem(AbstractOrderItem):
-    invoice = models.ForeignKey(Invoice)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=8,
         decimal_places=2,
@@ -168,7 +173,7 @@ class InvoiceItem(AbstractOrderItem):
 
 
 class Payment(models.Model):
-    invoice = models.ForeignKey(Invoice)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     METHODS = (
         (0, _("No Charge")),
         (1, _("Cash")),
@@ -182,7 +187,7 @@ class Payment(models.Model):
         default=METHODS[0][0],
         verbose_name=_("Payment Method")
     )
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
 

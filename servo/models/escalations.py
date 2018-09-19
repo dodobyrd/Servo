@@ -25,6 +25,7 @@ class Escalation(models.Model):
         GsxAccount,
         default=defaults.gsx_account,
         verbose_name=_('GSX Account'),
+        on_delete=models.CASCADE,
     )
     contexts = models.TextField(default='{}', blank=True)
     issue_type = models.CharField(
@@ -40,7 +41,12 @@ class Escalation(models.Model):
     )
     submitted_at = models.DateTimeField(null=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, editable=False, null=True)
+    created_by = models.ForeignKey(
+        User,
+        editable=False,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
     def is_submitted(self):
         return self.submitted_at is not None

@@ -92,8 +92,18 @@ class Note(MPTTModel):
         max_length=255,
         verbose_name=_('To')
     )
-    customer = models.ForeignKey(Customer, null=True, blank=True)
-    escalation = UnsavedForeignKey(Escalation, null=True, editable=False)
+    customer = models.ForeignKey(
+        Customer,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    escalation = UnsavedForeignKey(
+        Escalation,
+        null=True,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
     labels = models.ManyToManyField(Tag, blank=True, limit_choices_to={'type': 'note'})
 
     events = GenericRelation(Event)
@@ -102,13 +112,23 @@ class Note(MPTTModel):
         'self',
         null=True,
         blank=True,
-        related_name='replies'
+        related_name='replies',
+        on_delete=models.CASCADE,
     )
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        editable=False,
+        on_delete=models.SET_NULL
+    )
     sent_at = models.DateTimeField(null=True, editable=False)
-    order = models.ForeignKey(Order, null=True, blank=True)
+    order = models.ForeignKey(
+        Order,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
 
     is_reported = models.BooleanField(
         default=False,
@@ -528,7 +548,7 @@ class Note(MPTTModel):
         for r in recipients:
             try:
                 messages.append(self.send_sms(r, user))
-            except (ValidationError, IntegrityError), e:
+            except (ValidationError, IntegrityError) as e:
                 pass
 
         if self.mailto():
@@ -572,9 +592,9 @@ class Message(models.Model):
     Keeping this separate from Note so that we can send and track
     messages separately from Notes
     """
-    note = models.ForeignKey(Note)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)
     code = models.CharField(unique=True, max_length=36, default=defaults.uid)
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     sender = models.CharField(max_length=128)
     recipient = models.CharField(max_length=128)
     body = models.TextField()
@@ -627,7 +647,7 @@ class Article(models.Model):
     """
     GSX Communications article or a bit of local news
     """
-    created_by = models.ForeignKey(User, null=True)
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     gsx_id = models.CharField(max_length=20, default='', editable=False)
     date_created = models.DateField(editable=False)
     date_published = models.DateField(null=True)

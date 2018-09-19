@@ -51,7 +51,7 @@ class Checklist(models.Model):
 
 
 class ChecklistItem(models.Model):
-    checklist = models.ForeignKey(Checklist)
+    checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, verbose_name=_("Task"))
     description = models.TextField(
         blank=True,
@@ -74,11 +74,14 @@ class ChecklistItem(models.Model):
 
 
 class ChecklistItemValue(models.Model):
-    order = models.ForeignKey(Order)
-    item = models.ForeignKey(ChecklistItem)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    item = models.ForeignKey(ChecklistItem, on_delete=models.CASCADE)
 
     checked_at = models.DateTimeField(auto_now_add=True)
-    checked_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    checked_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         app_label = "servo"

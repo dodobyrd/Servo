@@ -17,7 +17,8 @@ class Calendar(models.Model):
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        editable=False
+        editable=False,
+        on_delete=models.CASCADE
     )
 
     title = models.CharField(
@@ -87,7 +88,8 @@ class CalendarEvent(models.Model):
 
     calendar = models.ForeignKey(
         Calendar,
-        editable=False
+        editable=False,
+        on_delete=models.CASCADE
     )
 
     started_at = models.DateTimeField(default=timezone.now)

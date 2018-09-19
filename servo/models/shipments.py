@@ -20,7 +20,11 @@ class Shipment(models.Model):
     RETURN_GPR = 2 # Good Part Return
     RETURN_CTS = 3 # Convert to stock
 
-    location = models.ForeignKey(Location, editable=False)
+    location = models.ForeignKey(
+        Location,
+        editable=False,
+        on_delete=models.CASCADE
+    )
 
     ship_to = models.CharField(
         default='',
@@ -81,6 +85,7 @@ class Shipment(models.Model):
         settings.AUTH_USER_MODEL,
         null=True,
         editable=False,
+        on_delete=models.SET_NULL,
         related_name='dispatched_shipments'
     )
 

@@ -58,7 +58,8 @@ class Queue(models.Model):
         blank=True,
         related_name='+',
         verbose_name=_(u'Order Created'),
-        help_text=_("Order has ben placed to a queue")
+        help_text=_("Order has ben placed into a queue"),
+        on_delete=models.SET_NULL
     )
 
     status_assigned = models.ForeignKey(
@@ -67,7 +68,8 @@ class Queue(models.Model):
         blank=True,
         related_name='+',
         verbose_name=_(u'Order Assigned'),
-        help_text=_("Order has ben assigned to a user")
+        help_text=_("Order has ben assigned to a user"),
+        on_delete=models.SET_NULL
     )
 
     status_products_ordered = models.ForeignKey(
@@ -76,7 +78,8 @@ class Queue(models.Model):
         blank=True,
         related_name='+',
         verbose_name=_("Products Ordered"),
-        help_text=_("Purchase Order for this Service Order has been submitted")
+        help_text=_("Purchase Order for this Service Order has been submitted"),
+        on_delete=models.SET_NULL
     )
     status_products_received = models.ForeignKey(
         'QueueStatus',
@@ -84,7 +87,8 @@ class Queue(models.Model):
         blank=True,
         related_name='+',
         verbose_name=_("Products Received"),
-        help_text=_("Products have been received")
+        help_text=_("Products have been received"),
+        on_delete=models.SET_NULL
     )
     status_repair_completed = models.ForeignKey(
         'QueueStatus',
@@ -92,7 +96,8 @@ class Queue(models.Model):
         blank=True,
         related_name='+',
         verbose_name=_("Repair Completed"),
-        help_text=_("GSX repair completed")
+        help_text=_("GSX repair completed"),
+        on_delete=models.SET_NULL
     )
 
     status_dispatched = models.ForeignKey(
@@ -100,7 +105,8 @@ class Queue(models.Model):
         null=True,
         blank=True,
         related_name='+',
-        verbose_name=_("Order Dispatched")
+        on_delete=models.SET_NULL,
+        verbose_name=_("Order Dispatched"),
     )
 
     status_closed = models.ForeignKey(
@@ -108,7 +114,8 @@ class Queue(models.Model):
         null=True,
         blank=True,
         related_name='+',
-        verbose_name=_("Order Closed")
+        on_delete=models.SET_NULL,
+        verbose_name=_("Order Closed"),
     )
 
     gsx_soldto = models.CharField(
@@ -116,7 +123,7 @@ class Queue(models.Model):
         default='',
         max_length=10,
         verbose_name=_("Sold-To"),
-        help_text=_("GSX queries of an order in this queue will be made using this Sold-To")
+        help_text=_("GSX queries of an order in this queue will be made using this Sold-To"),
     )
 
     order_template = models.FileField(
@@ -230,8 +237,8 @@ class QueueStatus(models.Model):
     A status bound to a queue.
     This allows us to set time limits for each status per indiviudal queue
     """
-    queue  = models.ForeignKey(Queue)
-    status = models.ForeignKey(Status)
+    queue  = models.ForeignKey(Queue, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
 
     limit_green = models.IntegerField(default=1, verbose_name=_(u'Green limit'))
     limit_yellow = models.IntegerField(default=15, verbose_name=_(u'Yellow limit'))

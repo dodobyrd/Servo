@@ -39,6 +39,7 @@ class User(AbstractUser):
         Customer,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         limit_choices_to={'is_company': True}
     )
 

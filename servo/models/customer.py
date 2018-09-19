@@ -47,6 +47,7 @@ class Customer(MPTTModel):
         blank=True,
         related_name='contacts',
         verbose_name=_('company'),
+        on_delete=models.SET_NULL,
         limit_choices_to={'is_company': True}
     )
     name = models.CharField(
@@ -289,7 +290,7 @@ class Customer(MPTTModel):
 
 
 class ContactInfo(models.Model):
-    customer = models.ForeignKey(Customer)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     key = models.CharField(max_length=255)
     value = models.CharField(max_length=255)
 

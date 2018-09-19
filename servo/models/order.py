@@ -898,7 +898,7 @@ class ServiceOrderItem(AbstractOrderItem):
     """
     A product that has been added to a Service Order
     """
-    order = models.ForeignKey(Order)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     dispatched = models.BooleanField(
         default=False,
@@ -919,7 +919,8 @@ class ServiceOrderItem(AbstractOrderItem):
         settings.AUTH_USER_MODEL,
         null=True,
         editable=False,
-        related_name='replaced_parts'
+        related_name='replaced_parts',
+        on_delete=models.SET_NULL
     )
 
     kbb_sn = models.CharField(
@@ -1037,20 +1038,22 @@ class OrderStatus(models.Model):
     """
     The M/M statuses of an order
     """
-    order = models.ForeignKey(Order)
-    status = models.ForeignKey(Status)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
 
     started_at = models.DateTimeField(auto_now_add=True)
     finished_at = models.DateTimeField(null=True)
 
     started_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='+'
+        related_name='+',
+        on_delete=models.CASCADE
     )
     finished_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
-        related_name='+'
+        related_name='+',
+        on_delete=models.CASCADE
     )
 
     green_limit = models.DateTimeField(null=True)
@@ -1128,8 +1131,8 @@ class OrderDevice(models.Model):
     """
     A device attached to a service order
     """
-    order = models.ForeignKey(Order)
-    device = models.ForeignKey(Device)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, on_delete=models.PROTECT)
     should_report = models.BooleanField(default=True)
     repeat_service = models.BooleanField(default=False)
     repair_strategies = ArrayField(models.CharField(max_length=100),
@@ -1160,8 +1163,8 @@ class Accessory(models.Model):
     """
     name    = models.TextField()
     qty     = models.IntegerField(default=1)
-    device  = models.ForeignKey(Device)
-    order   = models.ForeignKey(Order)
+    device  = models.ForeignKey(Device, on_delete=models.CASCADE)
+    order   = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.name

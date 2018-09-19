@@ -80,7 +80,7 @@ class Rule(ServoModel):
 
 
 class Condition(ServoModel):
-    rule = models.ForeignKey(Rule)
+    rule = models.ForeignKey(Rule, on_delete=models.CASCADE)
 
     EVENT_MAP = {
         'device_added': 'DEVICE',
@@ -118,7 +118,7 @@ class Condition(ServoModel):
 
 
 class Action(ServoModel):
-    rule = models.ForeignKey(Rule)
+    rule = models.ForeignKey(Rule, on_delete=models.CASCADE)
 
     KEY_CHOICES = (
         ('SEND_SMS',    _('Send SMS')),
@@ -156,9 +156,9 @@ class Action(ServoModel):
 def process_event(sender, instance, created, **kwargs):
     try:
         condition = Condition.EVENT_MAP[instance.action]
-        print condition
+        print(condition)
         for r in Rule.objects.filter(condition__key=condition):
-            print 'APPLYING %s' % condition
+            print('APPLYING %s' % condition)
             r.apply(instance)
     except KeyError:
         return # no mapping for this event
