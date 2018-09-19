@@ -6,19 +6,12 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.sites.models import Site
 
 from servo import defaults
 from servo.models.common import Location
 
 
 class Queue(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     title = models.CharField(
         max_length=255,
         unique=True,
@@ -178,12 +171,6 @@ class Queue(models.Model):
 
 
 class Status(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     FACTOR_CHOICES = (
         (60,        _('Minutes')),
         (3600,      _('Hours')),

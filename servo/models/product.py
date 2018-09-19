@@ -10,7 +10,6 @@ from django.core.files import File
 from django.core.cache import cache
 from decimal import Decimal, ROUND_CEILING
 from django.urls import reverse
-from django.contrib.sites.models import Site
 
 from django.contrib.contenttypes.fields import GenericRelation
 
