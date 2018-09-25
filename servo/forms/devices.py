@@ -48,11 +48,6 @@ class DeviceForm(forms.ModelForm):
                    'exploded_view_url', 'manual_url', )
         widgets = {'purchased_on': DatepickerInput()}
 
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.filter(type='device'),
-        required=False
-    )
-
 
 class DeviceUploadForm(forms.Form):
     datafile = forms.FileField(

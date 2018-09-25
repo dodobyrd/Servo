@@ -102,12 +102,12 @@ def index(request, product_line=None, model=None):
 
 
 def delete_device(request, product_line, model, pk):
-    dev = get_object_or_404(Device, pk=pk)
+    model = get_object_or_404(Device, pk=pk)
 
     if request.method == 'POST':
         from django.db.models import ProtectedError
         try:
-            dev.delete()
+            model.delete()
             messages.success(request, _("Device deleted"))
         except ProtectedError:
             messages.error(request, _("Cannot delete device with GSX repairs"))
@@ -115,8 +115,7 @@ def delete_device(request, product_line, model, pk):
 
         return redirect(index)
 
-    data = {'action': request.path}
-    data['device'] = dev
+    data = {'action': request.path, 'model': model}
 
     return render(request, "devices/remove.html", data)
 
