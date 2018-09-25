@@ -55,12 +55,12 @@ def prep_list_view(request, product_line=None, model=None):
     product_lines = gsxws.products.models()
 
     if product_line is None:
-        product_line = product_lines.keys()[0]
+        product_line = list(product_lines.keys())[0]
 
     models = model_from_slug(product_line)
 
     if model is None:
-        model = models.keys()[0]
+        model = list(models.keys())[0]
         title = product_lines[product_line]['name']
     else:
         title = models.get(model)
