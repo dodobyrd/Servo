@@ -40,7 +40,7 @@ class Checklist(models.Model):
     def get_admin_url(self):
         return reverse('admin-edit_checklist', args=[self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -66,7 +66,7 @@ class ChecklistItem(models.Model):
     )
     """
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -694,7 +694,7 @@ class Repair(models.Model):
 
         return reverse(url, args=[self.order.pk, self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         if self.pk is not None:
             return _("Repair %d") % self.pk
 

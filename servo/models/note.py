@@ -577,7 +577,7 @@ class Note(MPTTModel):
         else:
             return "/notes/saved/%d/view/" % self.pk
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.pk)
 
     class Meta:

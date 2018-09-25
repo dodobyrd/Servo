@@ -166,7 +166,7 @@ class Queue(models.Model):
         count = self.order_set.filter(state__lt=max_state).count()
         return count if count > 0 else ''
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -220,7 +220,7 @@ class Status(models.Model):
     def get_admin_url(self):
         return reverse('admin-edit_status', args=[self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -259,7 +259,7 @@ class QueueStatus(models.Model):
         sec = self.limit_yellow * self.limit_factor
         return timezone.now() + timedelta(seconds=sec)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.status.title
 
     class Meta:

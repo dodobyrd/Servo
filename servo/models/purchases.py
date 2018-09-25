@@ -329,7 +329,7 @@ class PurchaseOrderItem(AbstractOrderItem):
 
             self.order_item.save()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
 
     class Meta:

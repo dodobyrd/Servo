@@ -75,7 +75,7 @@ class Rule(ServoModel):
         for a in self.action_set.all():
             a.apply(order, event)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
 
@@ -113,7 +113,7 @@ class Condition(ServoModel):
         d['value'] = self.value
         return d
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s %s %s' % (self.key, self.operator, self.value)
 
 
@@ -148,7 +148,7 @@ class Action(ServoModel):
         if self.key == 'SET_USER':
             order.set_user(self.value, event.triggered_by)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s %s' % (self.key, self.value)
 
 

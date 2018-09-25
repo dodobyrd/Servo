@@ -259,7 +259,7 @@ class User(AbstractUser):
     def get_admin_url(self):
         return reverse('admin-edit_user', args=[self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.get_name() or self.username
 
     class Meta:

@@ -837,7 +837,7 @@ class Order(models.Model):
     def get_absolute_url(self):
         return reverse("orders-edit", args=[self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
 
 
@@ -1025,7 +1025,7 @@ class ServiceOrderItem(AbstractOrderItem):
     def is_warranty(self):
         return self.price_category == 'warranty'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
 
     class Meta:
@@ -1118,7 +1118,7 @@ class OrderStatus(models.Model):
         statuses = self.order.orderstatus_set
         return statuses.filter(started_at__lt=self.started_at).order_by('id').last()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.status.title
 
     class Meta:
@@ -1166,7 +1166,7 @@ class Accessory(models.Model):
     device  = models.ForeignKey(Device, on_delete=models.CASCADE)
     order   = models.ForeignKey(Order, on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:

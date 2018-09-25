@@ -31,7 +31,7 @@ class CustomerGroup(models.Model):
         self.slug = slugify(self.name)
         super(CustomerGroup, self).save()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -285,7 +285,7 @@ class Customer(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['name']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 

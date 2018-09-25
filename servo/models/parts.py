@@ -425,7 +425,7 @@ class ServicePart(models.Model):
 
         super(ServicePart, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'ServicePart %s' % self.part_number
 
     class Meta:

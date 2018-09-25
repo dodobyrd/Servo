@@ -534,7 +534,7 @@ class Product(AbstractBaseProduct):
             except Exception as e:
                 print(e)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s %s' % (self.code, self.title)
 
     class Meta:
@@ -584,7 +584,7 @@ class ProductCategory(MPTTModel):
         self.slug = slugify(self.title[:50])
         return super(ProductCategory, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:

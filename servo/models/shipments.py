@@ -184,7 +184,7 @@ class Shipment(models.Model):
 
         super(Shipment, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Shipment #%s from %s' % (self.pk, self.location.title)
 
     class Meta:

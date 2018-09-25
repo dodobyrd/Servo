@@ -65,7 +65,7 @@ class CsvTable(object):
     def has_body(self):
         return self.body != ''
 
-    def __unicode__(self):
+    def __str__(self):
         self.table = self.header + "\n" + self.body
         return self.table
 
@@ -108,7 +108,7 @@ class TaggedItem(BaseItem):
         self.slug = slugify(self.tag)
         super(TaggedItem, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.tag
 
     class Meta:
@@ -164,7 +164,7 @@ class Event(BaseItem):
     def get_class(self):
         return "disabled" if self.handled_at else ""
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
     class Meta:
@@ -297,7 +297,7 @@ class GsxAccount(models.Model):
     def get_admin_url(self):
         return reverse('admin-edit_gsx_account', args=[self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s (%s)" % (self.title, self.get_environment_display())
 
     class Meta:
@@ -368,7 +368,7 @@ class Tag(MPTTModel):
     def get_admin_url(self):
         return reverse('admin-edit_tag', args=[self.type, self.pk])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     objects = TreeManager()
@@ -523,7 +523,7 @@ class Location(models.Model):
             'emailAddress'  : self.email,
         }
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -683,7 +683,7 @@ class Property(models.Model):
     )
     value = models.TextField(blank=True, default='', verbose_name=_('value'))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_admin_url(self):
@@ -796,7 +796,7 @@ class Attachment(BaseItem):
 
         return super(Attachment, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return os.path.basename(self.content.name)
 
     def __str__(self):

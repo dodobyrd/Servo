@@ -528,7 +528,7 @@ class Device(models.Model):
 
         return results
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (%s)' % (self.description, self.sn)
 
     class Meta:
