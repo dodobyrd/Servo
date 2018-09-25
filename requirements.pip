@@ -4,9 +4,9 @@ django-countries
 django-bootstrap3
 djangorestframework
 babel
-markdown
+#markdown
 python-memcached
-psycopg2
+psycopg2-binary
 Pillow
 reportlab
 pytz
@@ -22,3 +22,5 @@ pyexcel-xlsx
 pyexcel_text
 -e git+git://github.com/filipp/py-gsxws.git#egg=gsxws
 -e git+git://github.com/filipp/django-wkhtmltopdf.git#egg=django-wkhtmltopdf
+-e git+https://github.com/Python-Markdown/markdown.git#egg=markdown
+
