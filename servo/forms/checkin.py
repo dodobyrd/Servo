@@ -28,7 +28,7 @@ YEARS = [x + 1 for x in range(y - 10, y)]
 def get_checkin_locations(user):
     """Return possible checkin location choices for this user."""
     from servo.models import User
-    if user.is_authenticated():
+    if user.is_authenticated:
         return user.locations.enabled()
     else:
         user_id = Configuration.conf('checkin_user')
@@ -196,7 +196,7 @@ class CustomerForm(forms.Form):
         self.fields['checkout_location'].queryset = locations
         self.fields['checkout_location'].initial = location
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             del(self.fields['agree_to_terms'])
             self.fields['phone'].widget = SearchFieldInput()
 

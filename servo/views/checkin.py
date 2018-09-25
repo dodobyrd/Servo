@@ -44,7 +44,7 @@ def find_device(request):
 
 
 def find_customer(request, phone):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise PermissionDenied
 
     results = []
@@ -116,7 +116,7 @@ def init_session(request):
 
     Only run for GET requests
     """
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         request.session.flush()
 
     if not Configuration.checkin_enabled():
@@ -138,7 +138,7 @@ def init_session(request):
     if not request.session.get('company_name'):
         request.session['company_name'] = Configuration.conf('company_name')
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
 
         # these are our fallback defaults
         user = request.user
@@ -193,7 +193,7 @@ def thanks(request, order):
 
 def get_customer(request):
     """Return the selected customer data."""
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         raise PermissionDenied
 
     if not request.GET.get('c'):
@@ -409,7 +409,7 @@ def index(request):
                 order.set_queue(device_form.cleaned_data['queue'], user)
 
             """
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 if request.user.autoprint:
                     redirect_to = print_confirmation
             """

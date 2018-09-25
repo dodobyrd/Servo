@@ -54,7 +54,7 @@ TEMP_ROOT = os.path.join(MEDIA_ROOT, 'temp')
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -67,6 +67,24 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+# Password validation
+# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 ROOT_URLCONF = 'servo.urls.default'
 SESSION_SERIALIZER = 'servo.lib.utils.SessionSerializer'
@@ -95,7 +113,7 @@ TEMPLATES = [
     },
 ]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
@@ -108,7 +126,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'mptt', 'bootstrap3',
     'servo',
-)
+]
 
 AUTH_USER_MODEL = 'servo.User'
 AUTH_PROFILE_MODULE = 'servo.UserProfile'
