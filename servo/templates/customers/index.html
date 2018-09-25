@@ -7,7 +7,8 @@
   <a class="btn" href="{% url 'customers-create_customer' group=group %}"><i class="icon-plus"></i> {% trans "New Customer" %}</a>
   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
   <ul class="dropdown-menu">
-  {% if customer.is_company %}
+      <li><a href="{% url 'customers-create_customer' group=group %}?company=1">{% trans "New Company" %}</a></li>
+  {% if customer.pk and customer.is_company %}
     <li><a href="{% url 'customers-create_contact' parent_id=customer.id %}">{% trans "New Contact" %}</a></li>
   {% else %}
     <li class="disabled"><a href="#">{% trans "New Contact" %}</a></li>

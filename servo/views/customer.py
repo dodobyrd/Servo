@@ -156,6 +156,10 @@ def edit(request, pk=None, parent_id=None, group='all'):
     data = prepare_view(request, group)
 
     customer = Customer()
+
+    if request.GET.get('company'):
+        customer.is_company = True
+        
     form = CustomerForm(instance=customer)
 
     if group != 'all':
