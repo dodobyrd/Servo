@@ -532,8 +532,9 @@ class Device(models.Model):
         return '%s (%s)' % (self.description, self.sn)
 
     class Meta:
-        app_label = "servo"
-        get_latest_by = "id"
+        app_label = 'servo'
+        get_latest_by = 'id'
+        ordering = ['created_at']
 
 
 @receiver(post_save, sender=Device)

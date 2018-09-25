@@ -88,13 +88,13 @@
       <hr/>
       <form method="post" action="{% url 'orders-update' order.pk "label" 0 %}" style="margin-bottom:0px">
         {% csrf_token %}
-        <label><i class="icon-tag"></i> {% trans "Label" %}</label>
-        <input type="text" name="label" class="input typeahead span12" placeholder="{% trans "Enter label" %}" data-provide="typeahead" data-source="{% url 'api-tags' %}"/>
+        <label><i class="icon-tag"></i> {% trans "Tags" %}</label>
+        <input type="text" name="label" class="input typeahead span12" placeholder="{% trans "Enter tag" %}" data-provide="typeahead" data-source="{% url 'api-tags' %}"/>
       </form>
       {% for t in order.tags.all %}
       <span class="label label-{{ t.color }}"><div class="pull-left">{{ t.title }}</div><a class="close" href="{% url 'orders-toggle_tag' order.pk t.pk %}"><i class="icon-remove icon-white"></i></a></span>
       {% empty %}
-      <p class="muted text-center">{% trans "No labels" %}</p>
+      <p class="muted text-center">{% trans "No tags" %}</p>
       {% endfor %}
       {% endblock first_column %}
     </div><!-- //# order sidebar -->

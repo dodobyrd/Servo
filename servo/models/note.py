@@ -173,7 +173,7 @@ class Note(MPTTModel):
 
         if self.subject:
             new_note.subject = _(u'Re: %s') % self.clean_subject()
-        if self.sender not in excluded_emails:
+        if self.sender not in new_note.get_excluded_emails():
             new_note.recipient = self.sender
         if self.order:
             new_note.order = self.order
@@ -181,7 +181,7 @@ class Note(MPTTModel):
             new_note.escalation = self.escalation
         if self.customer:
             new_note.customer = self.customer
-            
+
         new_note.is_reported = self.is_reported
 
         return new_note

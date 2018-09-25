@@ -740,7 +740,7 @@ class Template(models.Model):
 
     @classmethod
     def templates(self):
-        choices = Template.objects.all().values_list('title', flat=True)
+        choices = self.objects.all().values_list('title', flat=True)
         return list(choices)
 
     def render(self, context):
@@ -759,7 +759,7 @@ class Template(models.Model):
 
     class Meta:
         ordering = ['title']
-        app_label = "servo"
+        app_label = 'servo'
         verbose_name = _('Template')
         verbose_name_plural = _('Templates')
 

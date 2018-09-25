@@ -54,6 +54,7 @@ def prepare_list_view(request, args):
     if request.session.get("return_to"):
         del(request.session['return_to'])
 
+    # Current user is tied to a specific customer account
     if request.user.customer:
         orders = Order.objects.filter(customer=request.user.customer)
     else:
@@ -531,25 +532,26 @@ def update_order(request, pk, what, what_id):
         except Tag.DoesNotExist:
             messages.error(request, _(u"Label %s does not exist") % label)
 
-    if what == "checkin":
+    if what == 'checkin':
         location = Location.objects.get(pk=what_id)
         order.checkin_location = location
         messages.success(request, _('Order updated'))
         order.save()
 
-    if what == "checkout":
+    if what == 'checkout':
         location = Location.objects.get(pk=what_id)
         order.checkout_location = location
         messages.success(request, _('Order updated'))
         order.save()
 
-    if what == "location":
+    if what == 'location':
         location = Location.objects.get(pk=what_id)
         msg = order.set_location(location, request.user)
         messages.success(request, msg)
 
     request.session['current_order_id'] = order.pk
     request.session['current_order_code'] = order.code
+
     if order.queue:
         request.session['current_order_queue'] = order.queue.pk
 

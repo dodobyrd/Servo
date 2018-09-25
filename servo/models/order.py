@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 from string import Template as StringTemplate
 
 from django.db import models, IntegrityError
@@ -822,7 +822,7 @@ class Order(models.Model):
         )
 
     def save(self, *args, **kwargs):
-        self.created_at = datetime.now()
+        self.created_at = timezone.now()
         location = self.created_by.location
 
         if self.location_id is None:
