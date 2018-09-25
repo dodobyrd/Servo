@@ -10,6 +10,7 @@ psycopg2-binary
 Pillow
 reportlab
 pytz
+short_url
 phonenumbers
 python-dateutil
 pyBarcode

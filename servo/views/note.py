@@ -106,7 +106,8 @@ def edit(request, pk=None, order_id=None,
     """
     Edit a note.
 
-    @FIXME: Should split this up into smaller pieces
+    @FIXME: Should split this up into smaller pieces. This covers way too many
+    use cases in it's current form.
     """
     to = []
     order = None
@@ -188,7 +189,7 @@ def edit(request, pk=None, order_id=None,
     escalation_form = EscalationForm(prefix='escalation',
                                      instance=note.escalation)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         escalation_form = EscalationForm(request.POST,
                                          prefix='escalation',
                                          instance=note.escalation)
