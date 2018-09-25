@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from datetime import timedelta
+from datetime import datetime, timedelta
+from string import Template as StringTemplate
+
 from django.db import models, IntegrityError
 
 from django.conf import settings
@@ -10,8 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.contenttypes.fields import GenericRelation
 
-from django.dispatch import receiver
 from django.urls import reverse
+from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save, post_delete
 
 from servo import defaults
@@ -27,10 +29,17 @@ from servo.models.queue import Queue, Status, QueueStatus
 class Order(models.Model):
     """The Service Order."""
 
-    code = models.CharField(max_length=8, unique=True, null=True)
+    # Define the string template for new service order codes
+    CODE_TEMPLATE = r'$year$pk'
+
+    # The customer-visible service order code
+    code = models.CharField(max_length=16, unique=True, null=True)
+    # The "cookie" code for emails and external URLs
     url_code = models.CharField(max_length=8, unique=True, null=True)
-    # Device description or something else
+
+    # Device description or something else (summary of ticket, etc)
     description = models.CharField(max_length=128, default="")
+    # Icon for the current status of the order
     status_icon = models.CharField(max_length=16, default="undefined")
 
     priority = models.IntegerField(
@@ -661,6 +670,9 @@ class Order(models.Model):
         return self.devices.all().count() > 0
 
     def device_name(self):
+        """
+        Returns the name of the first device in this order
+        """
         if self.devices.count():
             return self.devices.all()[0].description
 
@@ -810,7 +822,7 @@ class Order(models.Model):
         )
 
     def save(self, *args, **kwargs):
-
+        self.created_at = datetime.now()
         location = self.created_by.location
 
         if self.location_id is None:
@@ -829,7 +841,16 @@ class Order(models.Model):
 
         if self.code is None:
             self.url_code = encode_url(self.id).upper()
-            self.code = settings.INSTALL_ID + str(self.id).rjust(6, '0')
+            tpl = StringTemplate(self.CODE_TEMPLATE)
+            context = {
+                'pk': str(self.id),
+                'id': str(self.id).rjust(6, '0'),
+                'day': self.created_at.day,
+                'year': self.created_at.year,
+                'month': self.created_at.month,
+                'initials': self.created_by.get_initials(),
+            }
+            self.code = tpl.safe_substitute(context)
             event = _('Order %s created') % self.code
             self.notify('created', event, self.created_by)
             self.save()

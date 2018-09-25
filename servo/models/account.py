@@ -261,6 +261,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.get_name() or self.username
+    
+    def get_initials(self):
+        return self.full_name[0:2].upper()
 
     class Meta:
         app_label = "servo"
