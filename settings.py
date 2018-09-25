@@ -64,7 +64,6 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'servo.lib.middleware.LoginRequiredMiddleware',
     'servo.lib.middleware.TimezoneMiddleware',
-    #'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
@@ -87,7 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 ROOT_URLCONF = 'servo.urls.default'
-SESSION_SERIALIZER = 'servo.lib.utils.SessionSerializer'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'wsgi.application'

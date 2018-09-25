@@ -5,7 +5,6 @@ import html2text
 import subprocess
 from django.http import HttpResponse
 from django.core.cache import cache
-from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -100,14 +99,6 @@ def cache_getset(k, v):
     val = v()
     cache.set(k, val)
     return val
-
-
-class SessionSerializer:
-    def dumps(self, obj):
-        return json.dumps(obj, cls=DjangoJSONEncoder)
-
-    def loads(self, data):
-        return json.loads(data, cls=DjangoJSONEncoder)
 
 
 def unescape(s):
