@@ -72,9 +72,9 @@ class BaseModelForm(forms.ModelForm):
 
 class SearchFieldInput(forms.TextInput):
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
-        field = super(SearchFieldInput, self).render(name, value, attrs)
+        field = super(SearchFieldInput, self).render(name, value, attrs, renderer)
         final_attrs = self.build_attrs(attrs)
 
         output = format_html(u'''
@@ -94,7 +94,7 @@ class DatepickerInput(forms.DateInput):
         kwargs['format'] = "%Y-%m-%d"
         super(DatepickerInput, self).__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         date_format = "yyyy-MM-dd"
 
@@ -104,7 +104,7 @@ class DatepickerInput(forms.DateInput):
         if "data-format" not in self.attrs:
             attrs['data-format'] = date_format
 
-        field = super(DatepickerInput, self).render(name, value, attrs)
+        field = super(DatepickerInput, self).render(name, value, attrs, renderer)
         final_attrs = self.build_attrs(attrs)
 
         output = format_html(u'''
@@ -124,7 +124,7 @@ class DateTimePickerInput(forms.DateTimeInput):
         kwargs['format'] = "%Y-%m-%d %H:%M"
         super(DateTimePickerInput, self).__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         date_format = "yyyy-MM-dd hh:mm"
 
@@ -133,7 +133,7 @@ class DateTimePickerInput(forms.DateTimeInput):
         if "class" not in self.attrs:
             attrs['class'] = 'input-medium'
 
-        field = super(DateTimePickerInput, self).render(name, value, attrs)
+        field = super(DateTimePickerInput, self).render(name, value, attrs, renderer)
         final_attrs = self.build_attrs(attrs)
 
         output = format_html(u'''
