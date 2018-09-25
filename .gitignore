@@ -1,7 +1,7 @@
+.*
 *.log
 *.pot
 *.pyc
-src
 uploads/logos/*
 uploads/attachments/*
 uploads/devices/*
@@ -14,5 +14,4 @@ uploads/temp/*
 backups/*
 local_settings.py
 local_rules.json
-.env*
 settings.json
