@@ -165,6 +165,26 @@ class Note(MPTTModel):
         from django import template
         tpl = template.Template(tpl)
         return tpl.render(template.Context(ctx))
+    
+    def clone(self, new_note):
+        """Clone these attributes over to new_note"""
+        new_note.parent = self
+        new_note.body = self.quote()
+
+        if self.subject:
+            new_note.subject = _(u'Re: %s') % self.clean_subject()
+        if self.sender not in excluded_emails:
+            new_note.recipient = self.sender
+        if self.order:
+            new_note.order = self.order
+        if self.escalation:
+            new_note.escalation = self.escalation
+        if self.customer:
+            new_note.customer = self.customer
+            
+        new_note.is_reported = self.is_reported
+
+        return new_note
 
     def get_sender(self):
         return self.sender

@@ -145,13 +145,6 @@ def edit(request, pk=None, order_id=None,
     note.sender = note.get_default_sender()
 
     fields = escalations.CONTEXTS
-
-    try:
-        note.escalation = Escalation(created_by=request.user)
-    except Exception as e:
-        messages.error(request, e)
-        return redirect(request.META['HTTP_REFERER'])
-
     AttachmentFormset = modelformset_factory(Attachment,
                                              fields=('content',),
                                              can_delete=True,
@@ -165,20 +158,7 @@ def edit(request, pk=None, order_id=None,
 
     if parent is not None:
         parent = get_object_or_404(Note, pk=parent)
-        note.parent = parent
-        note.body = parent.quote()
-
-        if parent.subject:
-            note.subject = _(u'Re: %s') % parent.clean_subject()
-        if parent.sender not in excluded_emails:
-            note.recipient = parent.sender
-        if parent.order:
-            order = parent.order
-            note.order = parent.order
-
-        note.customer = parent.customer
-        note.escalation = parent.escalation
-        note.is_reported = parent.is_reported
+        parent.clone(note)
 
     title = note.subject
     form = NoteForm(instance=note)
