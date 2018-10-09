@@ -32,7 +32,8 @@ def search_gsx(request, what, param, query):
             GsxAccount.default(user=request.user)
         else:
             act.connect(request.user)
-    except gsxws.GsxError as message:
+    except gsxws.GsxError as e:
+        message = _('GSX search failed: %s' % e)
         return render(request, "devices/search_gsx_error.html", locals())
 
     return render(request, "devices/search_gsx.html", locals())

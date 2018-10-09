@@ -64,6 +64,8 @@ def edit_gsx_account(request, pk=None):
                     act.test()
                     messages.success(request, _(u'%s saved') % act.title)
                     return redirect(list_gsx_accounts)
+                except gsxws.GsxConnectionError as e:
+                    messages.error(request, 'GSX connection failed: %s' % e)
                 except gsxws.GsxError as e:
                     messages.warning(request, e)
             except IntegrityError:
