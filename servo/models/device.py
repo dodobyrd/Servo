@@ -241,7 +241,7 @@ class Device(models.Model):
         Translates a GSX warranty status description
         to our internal representation
         """
-        if not isinstance(status, basestring):
+        if not isinstance(status, str):
             return
         if re.match(r"Apple Limited", status):
             self.warranty_status = "ALW"
@@ -360,9 +360,9 @@ class Device(models.Model):
             ad = device.get_activation()
             device.imei = ad.imeiNumber or ''
             device.unlocked = product.is_unlocked(ad)
+            device.next_tether_policy = ad.nextTetherPolicyDetails or ''
             device.applied_activation_policy = ad.appliedActivationDetails or ''
             device.initial_activation_policy = ad.initialActivationPolicyDetails or ''
-            device.next_tether_policy = ad.nextTetherPolicyDetails or ''
 
         cache.set(cache_key, device)
 
@@ -464,7 +464,7 @@ class Device(models.Model):
             results[product.code] = product
 
         cache.set_many(results)
-        cache.set(cache_key, results.values())
+        #cache.set(cache_key, results.values())
 
         return results.values()
 
