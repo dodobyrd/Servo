@@ -70,7 +70,7 @@ def get_gsx_search_results(request, what, param, query):
             device.update_gsx_details()
         except Exception:
             try:
-                device = Device.from_gsx(query, user=request.user)
+                device = Device.from_gsx(query, user=request.user, cached=False)
             except Exception as e:
                 return render(request, error_template, {'message': e})
 
@@ -91,7 +91,7 @@ def get_gsx_search_results(request, what, param, query):
 
             try:
                 partinfo = part.lookup()
-            except gsxws.GsxError as e:
+            except Exception as e:
                 return render(request, error_template, {'message': e})
 
             product = Product.from_gsx(partinfo)
@@ -103,7 +103,7 @@ def get_gsx_search_results(request, what, param, query):
                 dev = Device.from_gsx(query)
                 products = dev.get_parts()
                 return render(request, "devices/parts.html", locals())
-            except gsxws.GsxError as message:
+            except Exception as message:
                 return render(request, "search/results/gsx_error.html", locals())
 
         if param == "productName":
@@ -118,13 +118,13 @@ def get_gsx_search_results(request, what, param, query):
             # ... with a serial number
             try:
                 device = gsxws.Product(query)
-                #results = device.repairs()
                 for i, p in enumerate(device.repairs()):
                     d = {'purchaseOrderNumber': p.purchaseOrderNumber}
                     d['repairConfirmationNumber'] = p.repairConfirmationNumber
                     d['createdOn'] = p.createdOn
                     # @TODO: move the encoding hack to py-gsxws
-                    d['customerName'] = p.customerName.encode('utf-8')
+                    if p.customerName:
+                        d['customerName'] = p.customerName.encode('utf-8')
                     d['repairStatus'] = p.repairStatus
                     results.append(d)
             except gsxws.GsxError as e:

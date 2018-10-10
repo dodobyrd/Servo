@@ -352,9 +352,9 @@ class Product(AbstractBaseProduct):
         conf = Configuration.conf()
 
         try:
-            shipping = Decimal(conf.get("shipping_cost"))
-        except TypeError:
-            shipping = Decimal(0.0)
+            shipping = Decimal(conf.get('shipping_cost'))
+        except Exception:
+            raise Exception('Please check shipping cost setting in System Settings')
 
         part_number = part.originalPartNumber or part.partNumber
         product = Product(code=part_number)
@@ -397,7 +397,7 @@ class Product(AbstractBaseProduct):
         product.shipping = shipping
         product.warranty_period = 3
 
-        product.labour_tier = part.laborTier
+        product.labour_tier = part.laborTier or ''
         product.part_type = part.partType.upper()
 
         # EEE and componentCode are sometimes missing
