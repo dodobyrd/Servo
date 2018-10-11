@@ -4,7 +4,6 @@ django-countries
 django-bootstrap3
 djangorestframework
 babel
-#markdown
 python-memcached
 psycopg2-binary
 Pillow
@@ -13,7 +12,7 @@ pytz
 short_url
 phonenumbers
 python-dateutil
-pyBarcode
+python-barcode
 celery
 chardet
 html2text
@@ -24,4 +23,3 @@ pyexcel_text
 -e git+git://github.com/filipp/py-gsxws.git#egg=gsxws
 -e git+git://github.com/filipp/django-wkhtmltopdf.git#egg=django-wkhtmltopdf
 -e git+https://github.com/Python-Markdown/markdown.git#egg=markdown
-

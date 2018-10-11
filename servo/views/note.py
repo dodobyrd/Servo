@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from io import StringIO
+from io import BytesIO
 from gsxws import escalations
 
 from django import template
@@ -17,7 +17,10 @@ from django.core.files.base import ContentFile
 
 from reportlab.lib.units import mm
 from reportlab.graphics.shapes import Drawing
-from reportlab.graphics.barcode import createBarcodeDrawing
+from reportlab.graphics.barcode import createBarcodeDrawing, code128
+
+from barcode import generate
+from barcode.writer import SVGWriter
 
 from servo.lib.utils import paginate
 from servo.models import (Order, Template, Tag, Customer, Note,
@@ -39,16 +42,14 @@ class BarcodeDrawing(Drawing):
 def show_barcode(request, text):
     """Return text as a barcode."""
     if request.GET.get('f') == 'svg':
-        import barcode
-        output = StringIO.StringIO()
-        code = barcode.Code39(text, add_checksum=False)
-        code.write(output)
+        output = BytesIO()
+        generate('code39', text, writer=SVGWriter(), output=output)
         contents = output.getvalue()
         output.close()
-        return HttpResponse(contents, content_type="image/svg+xml")
+        return HttpResponse(contents, content_type='image/svg+xml')
 
     d = BarcodeDrawing(text)
-    return HttpResponse(d.asString("png"), content_type="image/png")
+    return HttpResponse(d.asString("png"), content_type='image/png')
 
 
 def prep_list_view(request, kind):
