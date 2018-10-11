@@ -359,13 +359,14 @@ class SettingsForm(BaseForm):
     currency = forms.ChoiceField(
         label=_('Currency'),
         choices=(
-            ('DKK', 'DKK'),
-            ('EUR', 'EUR'),
-            ('GBP', 'GBP'),
-            ('NZD', 'NZD'),
-            ('SEK', 'SEK'),
-            ('USD', 'USD'),
-            ('ZAR', 'ZAR'),
+            ('DKK', 'Danish Krone (DKK)'),
+            ('EUR', 'Euro (EUR)'),
+            ('GBP', 'British Pound (GBP)'),
+            ('NZD', 'New Zealand dollar (NZD)'),
+            ('SEK', 'Swedish Krona (SEK)'),
+            ('USD', 'US Dollar (USD)'),
+            ('ZAR', 'South African Rand (ZAR)'),
+            ('BEF', 'Belgian Franc (BEF)'),
         ),
         initial='EUR'
     )
