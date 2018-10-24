@@ -322,7 +322,9 @@ def toggle_task(request, order_id, item_id):
 
 
 def repair(request, order_id, repair_id):
-    """Show the corresponding GSX Repair for this Service Order."""
+    """
+    Show the corresponding GSX Repair for this Service Order.
+    """
     repair = get_object_or_404(Repair, pk=repair_id)
     data = prepare_detail_view(request, order_id)
     data['repair'] = repair
@@ -331,7 +333,7 @@ def repair(request, order_id, repair_id):
         repair.connect_gsx(request.user)
         details = repair.get_details()
         try:
-            data['notes'] = details.notes.encode('utf-8')
+            data['notes'] = details.notes.encode('utf8')
         except AttributeError:
             pass
         data['status'] = repair.update_status(request.user)
@@ -354,10 +356,10 @@ def repair(request, order_id, repair_id):
     else:
         data['status_form'] = StatusForm(initial={'status': repair.status_code})
 
-    return render(request, "orders/repair.html", data)
+    return render(request, 'orders/repair.html', data)
 
 
-@permission_required("servo.change_order")
+@permission_required('servo.change_order')
 def complete_repair(request, order_id, repair_id):
     """Mark this repair as complete in GSX."""
     repair = get_object_or_404(Repair, pk=repair_id)
@@ -376,7 +378,7 @@ def complete_repair(request, order_id, repair_id):
 
 
 @csrf_exempt
-@permission_required("servo.change_order")
+@permission_required('servo.change_order')
 def accessories(request, pk, device_id):
     from django.utils import safestring
 

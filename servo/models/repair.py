@@ -203,8 +203,8 @@ class Repair(models.Model):
         help_text=_('Repair is covered by AppleCare+')
     )
 
-    symptom_code = models.CharField(max_length=7, default='')
-    issue_code = models.CharField(max_length=7, default='')
+    symptom_code = models.CharField(max_length=7, default='', blank=True)
+    issue_code = models.CharField(max_length=7, default='', blank=True)
     objects = ActiveManager()
 
     def is_submitted(self):

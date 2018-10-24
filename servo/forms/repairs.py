@@ -89,21 +89,35 @@ class GsxRepairForm(forms.ModelForm):
             del(self.fields['mark_complete'])
             del(self.fields['replacement_sn'])
 
-        choices = Template.templates()
+        template_choices = Template.templates()
         for f in ('notes', 'symptom', 'diagnosis',):
-            self.fields[f].widget = AutocompleteTextarea(choices=choices)
+            self.fields[f].widget = AutocompleteTextarea(choices=template_choices)
+        
+        empty_choice = (('NA', _('Not available')),)
+        self.fields['issue_code'] = forms.ChoiceField(
+            label=_('Issue code'),
+            choices=empty_choice
+        )
+        self.fields['symptom_code'] = forms.ChoiceField(
+            label=_('Symptom group'),
+            choices=empty_choice
+        )
+        
+        try:
+            symptom_codes = self.instance.get_symptom_code_choices()
+            self.fields['symptom_code'].choices = symptom_codes
 
-        symptom_codes = self.instance.get_symptom_code_choices()
-        self.fields['symptom_code'] = forms.ChoiceField(choices=symptom_codes,
-                                                        label=_('Symptom group'))
+            if empty(self.instance.symptom_code):
+                # default to the first choice
+                self.instance.symptom_code = symptom_codes[0][0]
+        except gsxws.GsxError as e:
+            self.fields['symptom_code'].errors = [e]
 
-        if empty(self.instance.symptom_code):
-            # default to the first choice
-            self.instance.symptom_code = symptom_codes[0][0]
-
-        issue_codes = self.instance.get_issue_code_choices()
-        self.fields['issue_code'] = forms.ChoiceField(choices=issue_codes,
-                                                      label=_('Issue code'))
+        try:
+            issue_codes = self.instance.get_issue_code_choices()
+            self.fields['issue_code'].choices = issue_codes
+        except gsxws.GsxError as e:
+            self.fields['issue_code'].errors = [e]
 
     def clean(self, *args, **kwargs):
         cd = super(GsxRepairForm, self).clean(*args, **kwargs)

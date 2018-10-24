@@ -23,7 +23,7 @@ def model_from_slug(product_line, model=None):
     Returns product description for model slug or models dict for
     the specified product line
     """
-    if not cache.get("slugmap"):
+    if not cache.get('slugmap'):
         slugmap = {}  # Map model slug to corresponding product description
         product_lines = gsxws.products.models()
 
@@ -35,9 +35,12 @@ def model_from_slug(product_line, model=None):
 
             slugmap[k] = d
 
-        cache.set("slugmap", slugmap)
+        cache.set('slugmap', slugmap)
 
-    models = cache.get("slugmap").get(product_line)
+    try:
+        models = cache.get('slugmap').get(product_line)
+    except AttributeError as e:
+        raise Exception('Failed to retrieve device model data. Is the cache server running?')
 
     if model is not None:
         return models.get(model)
@@ -72,6 +75,7 @@ def prep_list_view(request, product_line=None, model=None):
 
     page = request.GET.get('page')
     devices = paginate(all_devices, page, 50)
+
     return locals()
 
 

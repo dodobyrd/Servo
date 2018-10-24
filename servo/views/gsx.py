@@ -187,13 +187,13 @@ def prep_edit_view(request, repair, order=None, device=None):
     context = {'order': order}
 
     if repair.submitted_at:
-        raise ValueError(_("Submitted repairs cannot be edited"))
+        raise ValueError(_('Submitted repairs cannot be edited'))
 
     if not order.has_parts:
-        raise ValueError(_("Please add some parts before creating repair"))
+        raise ValueError(_('Please add some parts before creating repair'))
 
     if not order.customer:
-        raise ValueError(_("Cannot create GSX repair without valid customer data"))
+        raise ValueError(_('Cannot create GSX repair without valid customer data'))
 
     customer = order.customer.gsx_address(request.user.location)
     customer_form = GsxCustomerForm(initial=customer)
@@ -222,7 +222,7 @@ def edit_repair(request, order_id, repair_id):
         repair.symptom_code = request.GET['c']
         repair.save()
         choices = repair.get_issue_code_choices()
-        return render(request, "repairs/issue_code_menu.html", locals())
+        return render(request, 'repairs/issue_code_menu.html', locals())
 
     repair.set_parts(order.get_parts())
 
@@ -234,21 +234,21 @@ def edit_repair(request, order_id, repair_id):
         messages.error(request, e)
         return redirect(order)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         try:
             data = save_repair(request, data)
             msg = _('GSX repair saved')
             if 'confirm' in request.POST.keys():
                 repair.submit(data['customer_data'])
-                msg = _(u"GSX repair %s created") % repair.confirmation
+                msg = _(u'GSX repair %s created') % repair.confirmation
                 messages.success(request, msg)
-                return redirect("repairs-view_repair", order.pk, repair.pk)
+                return redirect('repairs-view_repair', order.pk, repair.pk)
             messages.success(request, msg)
             return redirect(order)
         except Exception as e:
             messages.error(request, e)
 
-    return render(request, "orders/gsx_repair_form.html", data)
+    return render(request, 'orders/gsx_repair_form.html', data)
 
 
 def save_repair(request, context):
