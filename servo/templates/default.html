@@ -67,7 +67,6 @@
                   <li><a href="#"><i class="icon-user"></i> {{ request.user.get_name }}</a></li>
                   <li class="divider"></li>
                   <li><a href="{% url 'accounts-list_orders' %}"><i class="icon-home"></i> {% trans "Homepage" %}</a></li>
-                  <li><a href="{% url 'calendars-list' %}"><i class="icon-calendar"></i> {% trans "Calendars" %}</a></li>
                   <li><a href="{% url 'accounts-settings' %}"><i class="icon-wrench"></i> {% trans "Profile" %}</a></li>
                 {% if request.user.is_staff %}
                   <li><a href="{% url 'admin-settings' %}"><i class="icon-cog"></i> {% trans "System Settings" %}</a></li>

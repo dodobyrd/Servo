@@ -187,7 +187,5 @@ File "/data/servo/lib/python2.7/site-packages/django/core/handlers/base.py", lin
 For the next version
 ====================
 - [feature] Add Finnish ZIP code lookup
-- shared calendars
 - Password resets
 - an actually useful troubleshooting tool
-

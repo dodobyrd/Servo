@@ -4,7 +4,6 @@ from .common import *
 from .product import *
 from .account import *
 from .queue import *
-from .calendar import *
 from .customer import *
 from .device import *
 from .note import *
